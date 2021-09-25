@@ -10,7 +10,7 @@ Material:
   m_Name: BlockMat
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _EMISSION
-  m_LightmapFlags: 1
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -73,6 +73,6 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0, g: 0.7075472, b: 0.018806841, a: 1}
-    - _EmissionColor: {r: 0.9056604, g: 0, b: 0.48068166, a: 1}
+    - _Color: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissionColor: {r: 0.7490196, g: 0, b: 0.02745098, a: 1}
   m_BuildTextureStacks: []
