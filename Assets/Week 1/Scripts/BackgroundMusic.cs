@@ -24,4 +24,10 @@ public class BackgroundMusic : MonoBehaviour
             }
         }
     }
+
+    public void PlayNewBackground(AudioClip newClip)
+    {
+        audioSource.clip = newClip;
+        audioSource.Play();
+    }
 }
