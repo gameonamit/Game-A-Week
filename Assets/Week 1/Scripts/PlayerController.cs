@@ -8,9 +8,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     public float speed = 5f;
 
-    private Vector2 mousePosition;
-    private float deltaX, deltaY;
-
     [SerializeField] private float MinimumScale, MaximumScale;
     [SerializeField] private float scaleFactor = 0.2f;
     [SerializeField] private AudioClip []BallHitSFX;
@@ -24,11 +21,15 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        Movement();
+        //Get Input and Apply movement to player
+    }
+
+    private void Movement()
+    {
+        if (Input.GetMouseButtonDown(0))
         {
             isRecording = true;
-            deltaX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x;
-            deltaY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y - transform.position.y;
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -38,27 +39,12 @@ public class PlayerController : MonoBehaviour
 
         if (isRecording)
         {
-            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            rb.AddForce(new Vector3((mousePosition.x - deltaX) * speed * Time.deltaTime,
-                (mousePosition.y - deltaY) * speed * Time.deltaTime, 0f));
+            float newX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x;
+            float newY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y - transform.position.y;
+            rb.AddForce(new Vector3(newX * speed * Time.deltaTime,
+                newY * speed * Time.deltaTime, 0f));
         }
     }
-
-    //private void OnMouseDown()
-    //{
-    //    deltaX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x - transform.position.x;
-    //    deltaY = Camera.main.ScreenToWorldPoint(Input.mousePosition).y - transform.position.y;
-
-    //    //rb.velocity = Vector3.zero;
-    //    //rb.angularVelocity = Vector3.zero;
-    //}
-
-    //private void OnMouseDrag()
-    //{
-    //    mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    //    rb.AddForce(new Vector3((mousePosition.x - deltaX) * speed * Time.deltaTime,
-    //        (mousePosition.y - deltaY) * speed * Time.deltaTime, 0f));
-    //}
 
     public void IncreaseScale()
     {
