@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class ItemTypes : ScriptableObject
 {
-    //public new string name;
+    public new string name;
     public float score;
     [Multiline] public string ToastMessage;
 }

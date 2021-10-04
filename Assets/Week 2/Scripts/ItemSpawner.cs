@@ -12,7 +12,7 @@ public class ItemSpawner : MonoBehaviour
     [SerializeField] private float SpawnFrequency = 2f;
     private float time;
 
-    public GameObject []Items;
+    public ItemsGroup ItemsGroup;
 
     private void Start()
     {
@@ -37,12 +37,12 @@ public class ItemSpawner : MonoBehaviour
     public void SpawnItem()
     {
         //RandomItem
-        int itemsCount = Items.Length;
+        int itemsCount = ItemsGroup.m_Items.Length;
         int randomItem = Random.Range(0, itemsCount);
 
         float randomXPos = Random.Range(MinXPos, MaxXPos);
         Vector3 SpawnPosition = new Vector3(randomXPos, YPos, ZPos);
-        GameObject item = Instantiate(Items[randomItem], SpawnPosition, Quaternion.identity);
+        GameObject item = Instantiate(ItemsGroup.m_Items[randomItem], SpawnPosition, Quaternion.identity);
     }
 
     private void GetRandomItem()
