@@ -4,15 +4,61 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int HealthDecrease = 1;
+    public GameObject smokeParticleEffect;
+    public GameObject bombModel;
+
+    private GameManager gameManager;
+    private bool isTriggered = false;
+    private bool destroyed = false;
+
+    private void Start()
     {
-        
+        gameManager = FindObjectOfType<GameManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        SimulatedGravity();
+    }
+
+    private void SimulatedGravity()
+    {
+        transform.position -= gameManager.Gravity * new Vector3(0, 1, 0) * Time.deltaTime;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!destroyed)
+        {
+            destroyed = true;
+            if (isTriggered == true)
+            {
+                ItemActivated();
+            }
+            InstantiateParticle();
+            Destroy(this.gameObject, 2f);
+        }
+    }
+
+    public void ItemActivated()
+    {
+        FindObjectOfType<HealthSys>().DecreaseHealth(HealthDecrease);
+    }
+
+    private void InstantiateParticle()
+    {
+        float yOffset = 0.8f;
+        Vector3 spawnPosition = new Vector3(transform.position.x,
+            transform.position.y - yOffset, transform.position.z);
+
+        GameObject smokePE = Instantiate(smokeParticleEffect, spawnPosition, smokeParticleEffect.transform.rotation);
+        smokePE.GetComponent<ParticleSystem>().Play();
+        bombModel.SetActive(false);
+    }
+
+    public void ColliderTriggered(bool value)
+    {
+        isTriggered = value;
     }
 }

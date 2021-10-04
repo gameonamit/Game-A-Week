@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1846992269614488446}
   - component: {fileID: 6589901492583309953}
   - component: {fileID: -2707376961120485278}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Omelette
   m_TagString: Untagged
   m_Icon: {fileID: 0}

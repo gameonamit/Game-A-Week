@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5625106407863274589}
   - component: {fileID: 3904910091092598867}
   - component: {fileID: 623340778330512009}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: IceCream_Cone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

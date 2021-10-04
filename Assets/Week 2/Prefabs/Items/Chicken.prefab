@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 47004803020877104}
   - component: {fileID: 8454810772151987799}
   - component: {fileID: 7195211621276258057}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Chicken
   m_TagString: Untagged
   m_Icon: {fileID: 0}

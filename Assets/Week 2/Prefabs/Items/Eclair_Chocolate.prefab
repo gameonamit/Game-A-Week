@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2000228229390618774}
   - component: {fileID: -2086668244998557930}
   - component: {fileID: 5824459783434512872}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Eclair_Chocolate
   m_TagString: Untagged
   m_Icon: {fileID: 0}

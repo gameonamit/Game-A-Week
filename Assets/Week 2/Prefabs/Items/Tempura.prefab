@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6712341531637837248}
   - component: {fileID: -7479680763470706849}
   - component: {fileID: -156749215939781162}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Tempura
   m_TagString: Untagged
   m_Icon: {fileID: 0}

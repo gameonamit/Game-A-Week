@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2926630751126328065}
   - component: {fileID: 1140411752059221277}
   - component: {fileID: -6337725427223582258}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Chili
   m_TagString: Untagged
   m_Icon: {fileID: 0}

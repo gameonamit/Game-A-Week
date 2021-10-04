@@ -10,9 +10,12 @@ public class ItemSpawner : MonoBehaviour
     [SerializeField] private float ZPos;
 
     [SerializeField] private float SpawnFrequency = 2f;
+    [SerializeField] private float BombSpawnProbability = 10f;
+
     private float time;
 
     public ItemsGroup ItemsGroup;
+    public GameObject BombPrefab;
 
     private void Start()
     {
@@ -24,7 +27,16 @@ public class ItemSpawner : MonoBehaviour
         time -= Time.deltaTime;
         if (time <= 0)
         {
-            SpawnItem();
+            //Bomb Spawn Probability applied here
+            int ran = Random.Range(0, 101);
+            if (ran <= BombSpawnProbability)
+            {
+                SpawnBomb();
+            }
+            else
+            {
+                SpawnItem();
+            }
             SetRandomTime();
         }
     }
@@ -32,6 +44,13 @@ public class ItemSpawner : MonoBehaviour
     private void SetRandomTime()
     {
         time = Random.Range(0, SpawnFrequency);
+    }
+
+    private void SpawnBomb()
+    {
+        float randomXPos = Random.Range(MinXPos, MaxXPos);
+        Vector3 SpawnPosition = new Vector3(randomXPos, YPos, ZPos);
+        GameObject item = Instantiate(BombPrefab, SpawnPosition, Quaternion.identity);
     }
 
     public void SpawnItem()

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2445429876392140793}
   - component: {fileID: -7881131605104459759}
   - component: {fileID: 8876572537961720178}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Chips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
