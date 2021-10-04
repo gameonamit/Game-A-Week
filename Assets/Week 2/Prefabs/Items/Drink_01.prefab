@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: {fileID: 11400000, guid: f10b689a4024ef243a389fb8eef24733, type: 2}
+  itemParticleEffect: {fileID: 896875780924663066, guid: 036ad17486d78594e80207dd48cd2cab, type: 3}
 --- !u!114 &2208105092233209392
 MonoBehaviour:
   m_ObjectHideFlags: 0

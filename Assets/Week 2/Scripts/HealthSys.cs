@@ -12,6 +12,10 @@ public class HealthSys : MonoBehaviour
     {
         Health -= value;
         UpdateHealthUI();
+        if (Health <= 0)
+        {
+            FindObjectOfType<GameManager>().GameOver();
+        }
     }
 
     public void IncreaseHealth(int value)

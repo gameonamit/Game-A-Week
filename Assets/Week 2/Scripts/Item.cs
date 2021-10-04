@@ -7,9 +7,15 @@ public class Item : MonoBehaviour
     public ItemTypes itemType;
     private GameManager gameManager;
 
+    public GameObject itemParticleEffect;
+    private Renderer renderer;
+    private SphereCollider collider;
+
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        renderer = GetComponent<MeshRenderer>();
+        collider = GetComponent<SphereCollider>();
     }
 
     void FixedUpdate()
@@ -28,7 +34,10 @@ public class Item : MonoBehaviour
         {
             ItemActivated();
         }
-        Destroy(this.gameObject);
+        InstantiateParticle();
+        renderer.enabled = false;
+        collider.enabled = false;
+        Destroy(this.gameObject, 3f);
     }
 
     public void ItemActivated()
@@ -52,6 +61,23 @@ public class Item : MonoBehaviour
         {
             //Increase Player Size
         }
+    }
+
+    private void InstantiateParticle()
+    {
+        float yOffset = 0.8f;
+        Vector3 spawnPosition = new Vector3(transform.position.x,
+            transform.position.y - yOffset, transform.position.z);
+
+        GameObject smokePE = Instantiate(itemParticleEffect, spawnPosition, itemParticleEffect.transform.rotation);
+        smokePE.GetComponent<ParticleSystem>().Play();
+        StartCoroutine(DestroyParticleEffect(smokePE));
+    }
+
+    IEnumerator DestroyParticleEffect(GameObject gm)
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gm.gameObject);
     }
 
     private Vector2 GetItemDirection()

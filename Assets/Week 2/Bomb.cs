@@ -37,7 +37,7 @@ public class Bomb : MonoBehaviour
                 ItemActivated();
             }
             InstantiateParticle();
-            Destroy(this.gameObject, 2f);
+            Destroy(this.gameObject, 3f);
         }
     }
 
@@ -54,7 +54,15 @@ public class Bomb : MonoBehaviour
 
         GameObject smokePE = Instantiate(smokeParticleEffect, spawnPosition, smokeParticleEffect.transform.rotation);
         smokePE.GetComponent<ParticleSystem>().Play();
+        StartCoroutine(DestroyParticleEffect(smokePE));
+
         bombModel.SetActive(false);
+    }
+
+    IEnumerator DestroyParticleEffect(GameObject gm)
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gm.gameObject);
     }
 
     public void ColliderTriggered(bool value)
