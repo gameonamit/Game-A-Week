@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HealthSys : MonoBehaviour
 {
     [SerializeField] GameObject[] HealthImg;
 
     [SerializeField] int Health = 3;
+
+    [SerializeField] private Color activatedColor;
+    [SerializeField] private Color deactivatedColor;
 
     public void DecreaseHealth(int value)
     {
@@ -28,27 +32,37 @@ public class HealthSys : MonoBehaviour
     {
         if(Health >= 3)
         {
-            HealthImg[2].SetActive(true);
-            HealthImg[1].SetActive(true);
-            HealthImg[0].SetActive(true);
+            ActivateImage(HealthImg[2]);
+            ActivateImage(HealthImg[1]);
+            ActivateImage(HealthImg[0]);
         }
         else if(Health >= 2)
         {
-            HealthImg[2].SetActive(false);
-            HealthImg[1].SetActive(true);
-            HealthImg[0].SetActive(true);
+            DeactivateImage(HealthImg[2]);
+            ActivateImage(HealthImg[1]);
+            ActivateImage(HealthImg[0]);
         }
         else if(Health >= 1)
         {
-            HealthImg[2].SetActive(false);
-            HealthImg[1].SetActive(false);
-            HealthImg[0].SetActive(true);
+            DeactivateImage(HealthImg[2]);
+            DeactivateImage(HealthImg[1]);
+            ActivateImage(HealthImg[0]);
         }
         else
         {
-            HealthImg[2].SetActive(false);
-            HealthImg[1].SetActive(false);
-            HealthImg[0].SetActive(false);
+            DeactivateImage(HealthImg[2]);
+            DeactivateImage(HealthImg[1]);
+            DeactivateImage(HealthImg[0]);
         }
+    }
+
+    private void DeactivateImage(GameObject image)
+    {
+        image.GetComponent<Image>().color = deactivatedColor;
+    }
+
+    private void ActivateImage(GameObject image)
+    {
+        image.GetComponent<Image>().color = activatedColor;
     }
 }

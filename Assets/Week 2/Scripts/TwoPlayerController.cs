@@ -15,53 +15,62 @@ public class TwoPlayerController : MonoBehaviour
     Vector3 position;
     Vector3 distance;
 
+    private GameManager gameManager;
+
+    private void Start()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
+
     void Update()
     {
-        if(Input.GetMouseButtonUp(0))
+        if (gameManager.isGameStarted)
         {
-            moving = true;
-            Vector3 mousePosition = Input.mousePosition;
+            if (Input.GetMouseButtonUp(0))
+            {
+                moving = true;
+                Vector3 mousePosition = Input.mousePosition;
 
-            position = Camera.main.ScreenToWorldPoint(mousePosition);
-            distance = (position - transform.position);
-            if(distance.x < 0)
-            {
-                distance -= new Vector3(movementXOffset, 0f, 0f);
+                position = Camera.main.ScreenToWorldPoint(mousePosition);
+                distance = (position - transform.position);
+                if (distance.x < 0)
+                {
+                    distance -= new Vector3(movementXOffset, 0f, 0f);
+                }
+                else
+                {
+                    distance += new Vector3(movementXOffset, 0f, 0f);
+                }
             }
-            else
+
+            if (moving)
             {
-                distance += new Vector3(movementXOffset, 0f, 0f);
+                if (distance.x <= 0)
+                {
+                    transform.position -= speed * new Vector3(1, 0, 0) * Time.deltaTime;
+                    distance += speed * new Vector3(1, 0, 0) * Time.deltaTime;
+                    RotateLight(1);
+                }
+                else
+                {
+                    transform.position += speed * new Vector3(1, 0, 0) * Time.deltaTime;
+                    distance -= speed * new Vector3(1, 0, 0) * Time.deltaTime;
+                    RotateLight(0);
+                }
+                if (Mathf.Round(distance.x) == 0.00f)
+                {
+                    moving = false;
+                    distance = Vector3.zero;
+                    position = Vector3.zero;
+                    return;
+                }
             }
+
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, minXPos, maxXPos),
+                transform.position.y,
+                transform.position.z);
+            //Clamping to X position to min and max positon
         }
-
-        if (moving)
-        {
-            if (distance.x <= 0)
-            {
-                transform.position -= speed * new Vector3(1, 0, 0) * Time.deltaTime;
-                distance += speed * new Vector3(1, 0, 0) * Time.deltaTime;
-                RotateLight(1);
-            }
-            else
-            {
-                transform.position += speed * new Vector3(1, 0, 0) * Time.deltaTime;
-                distance -= speed * new Vector3(1, 0, 0) * Time.deltaTime;
-                RotateLight(0);
-            }
-            if (Mathf.Round(distance.x) == 0.00f)
-            {
-                moving = false;
-                distance = Vector3.zero;
-                position = Vector3.zero;
-                return;
-            }
-        }
-
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, minXPos, maxXPos), 
-            transform.position.y,
-            transform.position.z);
-        //Clamping to X position to min and max positon
-
     }
 
     private void RotateLight(int v)

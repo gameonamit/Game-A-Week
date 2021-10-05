@@ -16,28 +16,33 @@ public class ItemSpawner : MonoBehaviour
 
     public ItemsGroup ItemsGroup;
     public GameObject BombPrefab;
+    private GameManager gameManager;
 
     private void Start()
     {
+        gameManager = FindObjectOfType<GameManager>();
         SetRandomTime();
     }
 
     private void Update()
     {
-        time -= Time.deltaTime;
-        if (time <= 0)
+        if (gameManager.isGameStarted) 
         {
-            //Bomb Spawn Probability applied here
-            int ran = Random.Range(0, 101);
-            if (ran <= BombSpawnProbability)
+        time -= Time.deltaTime;
+            if (time <= 0)
             {
-                SpawnBomb();
+                //Bomb Spawn Probability applied here
+                int ran = Random.Range(0, 101);
+                if (ran <= BombSpawnProbability)
+                {
+                    SpawnBomb();
+                }
+                else
+                {
+                    SpawnItem();
+                }
+                SetRandomTime();
             }
-            else
-            {
-                SpawnItem();
-            }
-            SetRandomTime();
         }
     }
 
@@ -63,13 +68,4 @@ public class ItemSpawner : MonoBehaviour
         Vector3 SpawnPosition = new Vector3(randomXPos, YPos, ZPos);
         GameObject item = Instantiate(ItemsGroup.m_Items[randomItem], SpawnPosition, Quaternion.identity);
     }
-
-    private void GetRandomItem()
-    {
-
-    }
-
-
-
-
 }

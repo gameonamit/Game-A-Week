@@ -34,7 +34,10 @@ public class Item : MonoBehaviour
         {
             ItemActivated();
         }
-        InstantiateParticle();
+        else
+        {
+            InstantiateParticle();
+        }
         renderer.enabled = false;
         collider.enabled = false;
         Destroy(this.gameObject, 3f);
