@@ -9,7 +9,8 @@ public class ItemSpawner : MonoBehaviour
     [SerializeField] private float YPos;
     [SerializeField] private float ZPos;
 
-    [SerializeField] private float SpawnFrequency = 2f;
+    [SerializeField] private float MinSpawnFrequency = 0.1f;
+    [SerializeField] private float MaxSpawnFrequency = 2f;
     [SerializeField] private float BombSpawnProbability = 10f;
 
     private float time;
@@ -18,17 +19,20 @@ public class ItemSpawner : MonoBehaviour
     public GameObject BombPrefab;
     private GameManager gameManager;
 
+    private float SpawnFrequency;
+
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        SpawnFrequency = MaxSpawnFrequency;
         SetRandomTime();
     }
 
     private void Update()
     {
-        if (gameManager.isGameStarted) 
+        if (gameManager.isGameStarted && !gameManager.isGameOver) 
         {
-        time -= Time.deltaTime;
+            time -= Time.deltaTime;
             if (time <= 0)
             {
                 //Bomb Spawn Probability applied here
@@ -43,6 +47,15 @@ public class ItemSpawner : MonoBehaviour
                 }
                 SetRandomTime();
             }
+            DecreaseSpawnFrequency();
+        }
+    }
+
+    private void DecreaseSpawnFrequency()
+    {
+        if(SpawnFrequency > MinSpawnFrequency)
+        {
+            SpawnFrequency -= Time.deltaTime * 0.05f;
         }
     }
 

@@ -24,7 +24,7 @@ public class TwoPlayerController : MonoBehaviour
 
     void Update()
     {
-        if (gameManager.isGameStarted)
+        if (gameManager.isGameStarted && !gameManager.isGameOver)
         {
             if (Input.GetMouseButtonUp(0))
             {

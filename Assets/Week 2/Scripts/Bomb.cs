@@ -12,9 +12,13 @@ public class Bomb : MonoBehaviour
     private bool isTriggered = false;
     private bool destroyed = false;
 
+    [SerializeField] private AudioClip bombExplosionClip;
+    private AudioSource audioSource;
+
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -36,6 +40,10 @@ public class Bomb : MonoBehaviour
             {
                 ItemActivated();
             }
+
+            //Playing explosion audio
+            audioSource.clip = bombExplosionClip;
+            audioSource.Play();
             InstantiateParticle();
             Destroy(this.gameObject, 3f);
         }

@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject GamePanel;
     [SerializeField] private GameObject GameOverPanel;
 
-    private bool isGameOver = false;
+    public bool isGameOver = false;
     public bool isGameStarted = false;
     private float startingGravity;
 
@@ -37,21 +37,26 @@ public class GameManager : MonoBehaviour
         if (!isGameOver)
         {
             isGameOver = true;
+            Time.timeScale = 0.2f;
             StartCoroutine(GameOverDelay());
         }
     }
 
     IEnumerator GameOverDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(2f);
         GamePanel.SetActive(false);
         GameOverPanel.SetActive(true);
-        Time.timeScale = 0f;
+        FindObjectOfType<TwoScoringSys>().UpdateGameOverTxt();
+        Time.timeScale = 1f;
         StopAllCoroutines();
     }
 
     public void MenuBtnClick()
     {
+        TwoBackgroundMusic bgMusic = FindObjectOfType<TwoBackgroundMusic>();
+        bgMusic.PlayMenuBGMusic();
+
         int buildIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(buildIndex);
     }
@@ -61,5 +66,8 @@ public class GameManager : MonoBehaviour
         isGameStarted = true;
         MenuPanel.SetActive(false);
         GamePanel.SetActive(true);
+
+        TwoBackgroundMusic bgMusic = FindObjectOfType<TwoBackgroundMusic>();
+        bgMusic.PlayGameBGMusic();
     }
 }

@@ -8,14 +8,18 @@ public class Item : MonoBehaviour
     private GameManager gameManager;
 
     public GameObject itemParticleEffect;
+    [SerializeField] private AudioClip itemPickUpSFX;
+    [SerializeField] private AudioClip itemDropSFX;
     private Renderer renderer;
     private SphereCollider collider;
+    private AudioSource audioSource;
 
     private void Start()
     {
         gameManager = FindObjectOfType<GameManager>();
         renderer = GetComponent<MeshRenderer>();
         collider = GetComponent<SphereCollider>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void FixedUpdate()
@@ -33,10 +37,14 @@ public class Item : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             ItemActivated();
+            audioSource.clip = itemPickUpSFX;
+            audioSource.Play();
         }
         else
         {
             InstantiateParticle();
+            audioSource.clip = itemDropSFX;
+            audioSource.Play();
         }
         renderer.enabled = false;
         collider.enabled = false;
@@ -46,7 +54,7 @@ public class Item : MonoBehaviour
     public void ItemActivated()
     {
         //Apply PowerUps
-
+        PowerUp();
 
         //Direction
         Vector2 direction = GetItemDirection();
@@ -58,11 +66,18 @@ public class Item : MonoBehaviour
         FindObjectOfType<TwoScoringSys>().IncreaseScore(itemType.score);
     }
 
-    private void PowerUps()
+    private void PowerUp()
     {
-        if (itemType.name == "Apple")
+        if (itemType.isChilli == true)
         {
-            //Increase Player Size
+            //Apply chilli effect
+            FindObjectOfType<PowerUps>().ActivateChilliPowerUp();
+        }
+
+        if(itemType.makePlayerBigger == true)
+        {
+            //Increase Player size
+            FindObjectOfType<PowerUps>().IncreasePlayerSize();
         }
     }
 

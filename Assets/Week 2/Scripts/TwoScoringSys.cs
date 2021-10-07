@@ -6,6 +6,7 @@ using TMPro;
 public class TwoScoringSys : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreTxt;
+    [SerializeField] private TextMeshProUGUI gameOverScoreTxt;
     private float Score = 0f;
 
     public void DecreaseScore(float value)
@@ -23,5 +24,10 @@ public class TwoScoringSys : MonoBehaviour
     private void UpdateScoreTxt()
     {
         scoreTxt.text = Score.ToString();
+    }
+
+    public void UpdateGameOverTxt()
+    {
+        gameOverScoreTxt.text = Score.ToString();
     }
 }
