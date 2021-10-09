@@ -9,7 +9,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        Horizontal = Input.GetAxis("Horizontal");
+        Horizontal = Input.GetAxisRaw("Horizontal");
         jump = Input.GetButtonDown("Jump");
     }
 }
