@@ -12,18 +12,20 @@ public class PlayerShooter : MonoBehaviourPunCallbacks
 
     public float bulletForce = 20f;
     Vector2 mousePos;
+    Vector3 cameraRotaion;
 
     void Update()
     {
         if (photonView.IsMine)
         {
+            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            cameraRotaion = Camera.main.transform.eulerAngles;
+            ApplyRotation();
+
             if (Input.GetButtonDown("Fire1"))
             {
                 Shoot();
             }
-
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            ApplyRotation();
         }
     }
 

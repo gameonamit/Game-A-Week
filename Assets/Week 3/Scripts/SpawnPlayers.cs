@@ -2,22 +2,48 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Cinemachine;
 
-public class SpawnPlayers : MonoBehaviour
+public class SpawnPlayers : MonoBehaviourPunCallbacks
 {
+    [SerializeField] private CinemachineVirtualCamera cineCam;
+
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private Transform []SpawnPoints;
 
-    public float minX;
-    public float maxX;
-    public float minY;
-    public float maxY;
+    private void Start()
+    {        
+        StartCoroutine(SpawnPlayer());
+    }
 
-    private void Awake()
+    private IEnumerator SpawnPlayer()
     {
-        Vector2 randomPosition = new Vector2(Random.Range(minX, maxX),
-            Random.Range(minY, maxY));
-        var player = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
-        string playerName = PlayerInformation.instance.PlayerName;
-        player.GetComponent<NetworkPlayer>().PlayerName = playerName;
+        yield return new WaitForSeconds(0.1f);
+        GameObject []players = GameObject.FindGameObjectsWithTag("OtherPlayer");
+        Debug.Log(players.Length);
+        if(players.Length <= 0)
+        {
+            Vector3 SpawnPosition = SpawnPoints[0].transform.position;
+            var player = PhotonNetwork.Instantiate(playerPrefab.name, SpawnPosition, Quaternion.identity);
+            string playerName = PlayerInformation.instance.PlayerName;
+            player.GetComponent<NetworkPlayer>().PlayerName = playerName;
+        }
+        else
+        {
+            Vector3 SpawnPosition = SpawnPoints[1].transform.position;
+            var player = PhotonNetwork.Instantiate(playerPrefab.name, SpawnPosition, Quaternion.identity);
+            string playerName = PlayerInformation.instance.PlayerName;
+            player.GetComponent<NetworkPlayer>().PlayerName = playerName;
+        }
+        yield return new WaitForSeconds(0.01f);
+        UpdateCameraTarget();
+    }
+
+    private void UpdateCameraTarget()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        PlayerFollowTarget followTarget = player.GetComponentInChildren<PlayerFollowTarget>();
+        cineCam.Follow = followTarget.transform;
+        Debug.Log("HEre!");
     }
 }
