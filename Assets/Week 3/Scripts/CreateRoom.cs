@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 using Photon.Pun;
 
 public class CreateRoom : MonoBehaviourPunCallbacks
@@ -15,6 +16,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        //SceneManager.LoadScene("Naming");
         PhotonNetwork.LoadLevel("GameScene");
     }
 }

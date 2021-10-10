@@ -12,10 +12,12 @@ public class SpawnPlayers : MonoBehaviour
     public float minY;
     public float maxY;
 
-    private void Start()
+    private void Awake()
     {
         Vector2 randomPosition = new Vector2(Random.Range(minX, maxX),
             Random.Range(minY, maxY));
-        PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
+        var player = PhotonNetwork.Instantiate(playerPrefab.name, randomPosition, Quaternion.identity);
+        string playerName = PlayerInformation.instance.PlayerName;
+        player.GetComponent<NetworkPlayer>().PlayerName = playerName;
     }
 }
