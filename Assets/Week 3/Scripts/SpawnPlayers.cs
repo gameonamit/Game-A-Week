@@ -18,6 +18,7 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks
 
     private IEnumerator SpawnPlayer()
     {
+        FindObjectOfType<LevelManager>().IncreasePlayerSpawned();
         yield return new WaitForSeconds(0.1f);
         GameObject []players = GameObject.FindGameObjectsWithTag("OtherPlayer");
         Debug.Log(players.Length);
@@ -27,6 +28,7 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks
             var player = PhotonNetwork.Instantiate(playerPrefab.name, SpawnPosition, Quaternion.identity);
             string playerName = PlayerInformation.instance.PlayerName;
             player.GetComponent<NetworkPlayer>().PlayerName = playerName;
+            cineCam.transform.position = SpawnPoints[0].transform.position;
         }
         else
         {
@@ -34,6 +36,7 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks
             var player = PhotonNetwork.Instantiate(playerPrefab.name, SpawnPosition, Quaternion.identity);
             string playerName = PlayerInformation.instance.PlayerName;
             player.GetComponent<NetworkPlayer>().PlayerName = playerName;
+            cineCam.transform.position = SpawnPoints[1].transform.position;
         }
         yield return new WaitForSeconds(0.01f);
         UpdateCameraTarget();

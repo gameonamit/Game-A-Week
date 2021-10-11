@@ -59,11 +59,13 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
     {
         yield return new WaitForSeconds(0.05f);
         playerNameTxt.text = PlayerName;
+        FindObjectOfType<PlayerNameUI>().UpdatePlayerName(this.gameObject, PlayerName);
     }
 
     public IEnumerator MainPlayer()
     {
         yield return new WaitForSeconds(0.05f);
         playerNameTxt.text = "Me";
+        FindObjectOfType<PlayerNameUI>().UpdatePlayerName(this.gameObject, PlayerName);
     }
 }

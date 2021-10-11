@@ -45,7 +45,10 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
         {
             ApplyGravity();
             //Gravity
+        }
 
+        if (photonView.IsMine && !LevelManager.isPaused)
+        {
             ApplyMovement();
             //Movement
 

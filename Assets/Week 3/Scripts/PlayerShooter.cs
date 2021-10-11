@@ -12,15 +12,14 @@ public class PlayerShooter : MonoBehaviourPunCallbacks
 
     public float bulletForce = 20f;
     Vector2 mousePos;
-    Vector3 cameraRotaion;
 
     void Update()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine && !LevelManager.isPaused)
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            cameraRotaion = Camera.main.transform.eulerAngles;
             ApplyRotation();
+            //RotateTowards();
 
             if (Input.GetButtonDown("Fire1"))
             {
@@ -63,7 +62,9 @@ public class PlayerShooter : MonoBehaviourPunCallbacks
 
     private void ApplyRotation()
     {
-        Vector2 lookDir = mousePos - new Vector2(firePoint.transform.position.x, firePoint.transform.position.y);
+        var MousePos = Input.mousePosition;
+        Vector3 firePositon = Camera.main.WorldToScreenPoint(firePoint.position);
+        Vector3 lookDir = MousePos - firePositon;
         float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg - 90f;
         firePoint.eulerAngles = new Vector3(0, 0, angle);
     }

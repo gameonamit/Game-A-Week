@@ -10,7 +10,7 @@ public class PlayerInput : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (photonView.IsMine)
+        if (photonView.IsMine && !LevelManager.isPaused)
         {
             Horizontal = Input.GetAxisRaw("Horizontal");
             jump = Input.GetButtonDown("Jump");
