@@ -19,6 +19,8 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
             tag = "OtherPlayer";
             playerNameTxt.gameObject.SetActive(true);
             StartCoroutine(UpdatePlayerText());
+            AudioListener audioListener = GetComponent<AudioListener>();
+            Destroy(audioListener);
         }
         else
         {
@@ -28,6 +30,7 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
 
         networkPosition = transform.position;
         networkRotation = transform.rotation;
+        FindObjectOfType<LevelManager>().IncreasePlayerSpawned();
     }
 
     void Update()
@@ -57,14 +60,14 @@ public class NetworkPlayer : MonoBehaviourPun, IPunObservable
 
     public IEnumerator UpdatePlayerText()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.25f);
         playerNameTxt.text = PlayerName;
         FindObjectOfType<PlayerNameUI>().UpdatePlayerName(this.gameObject, PlayerName);
     }
 
     public IEnumerator MainPlayer()
     {
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.25f);
         playerNameTxt.text = "Me";
         FindObjectOfType<PlayerNameUI>().UpdatePlayerName(this.gameObject, PlayerName);
     }

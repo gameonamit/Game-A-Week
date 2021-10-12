@@ -26,33 +26,39 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
 
     public void IncreaseHealth(int value)
     {
-        CurrentHealth += value;
-        if (CurrentHealth >= 100)
+        if (!LevelManager.isPaused)
         {
-            CurrentHealth = 100;
+            CurrentHealth += value;
+            if (CurrentHealth >= 100)
+            {
+                CurrentHealth = 100;
+            }
+            UpdateUI();
         }
-        UpdateUI();
     }
 
     public void DecreaseHealth(int value)
     {
-        CurrentHealth -= value;
-        if (CurrentHealth <= 0)
+        if (!LevelManager.isPaused)
         {
-            CurrentHealth = 0;
-            if (this.gameObject.CompareTag("Player"))
+            CurrentHealth -= value;
+            if (CurrentHealth <= 0)
             {
-                GameObject player = GameObject.FindGameObjectWithTag("OtherPlayer");
-                player.GetComponent<PlayerRounds>().IncreaseRound();
+                CurrentHealth = 0;
+                if (this.gameObject.CompareTag("Player"))
+                {
+                    GameObject player = GameObject.FindGameObjectWithTag("OtherPlayer");
+                    player.GetComponent<PlayerRounds>().IncreaseRound();
+                }
+                else
+                {
+                    GameObject player = GameObject.FindGameObjectWithTag("Player");
+                    player.GetComponent<PlayerRounds>().IncreaseRound();
+                }
+                CurrentHealth = 100;
             }
-            else
-            {
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
-                player.GetComponent<PlayerRounds>().IncreaseRound();
-            }
-            CurrentHealth = 100;
+            UpdateUI();
         }
-        UpdateUI();
     }
 
     private void UpdateUI()

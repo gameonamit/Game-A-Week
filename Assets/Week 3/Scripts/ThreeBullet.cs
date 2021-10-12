@@ -8,6 +8,7 @@ public class ThreeBullet : MonoBehaviourPunCallbacks
     public int Damage = 20;
     public float lifeTime = 6f;
     public bool isOtherBullet = false;
+    public GameObject BulletImpactEffect;
 
     private void Start()
     {
@@ -38,6 +39,7 @@ public class ThreeBullet : MonoBehaviourPunCallbacks
         }
         else
         {
+            Instantiate(BulletImpactEffect, transform.position, transform.rotation);
             Destroy(this.gameObject);
         }
     }

@@ -11,7 +11,14 @@ public class LevelManager : MonoBehaviourPunCallbacks
     public static bool isPaused = true;
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private TextMeshProUGUI timerTxt;
+    [SerializeField] private TextMeshProUGUI resultsTxt;
     private int playersSpawned = 0;
+
+    private void Awake()
+    {
+        timerTxt.gameObject.SetActive(true);
+        timerTxt.text = "Waiting for other player.";
+    }
 
     private void Start()
     {
@@ -28,10 +35,11 @@ public class LevelManager : MonoBehaviourPunCallbacks
         isPaused = false;
     }
 
-    public void GameOver()
+    public void GameOver(string text)
     {
         PauseGame();
         gameOverMenu.SetActive(true);
+        resultsTxt.text = text + " won the Game.";
     }
 
     public void OnMenuBtnClick()
@@ -42,12 +50,6 @@ public class LevelManager : MonoBehaviourPunCallbacks
 
     public void IncreasePlayerSpawned()
     {
-        photonView.RPC("PlayerSpawned", RpcTarget.All);
-    }
-
-    [PunRPC]
-    private void PlayerSpawned()
-    {
         playersSpawned += 1;
         if (playersSpawned >= 2)
         {
@@ -55,19 +57,39 @@ public class LevelManager : MonoBehaviourPunCallbacks
         }
     }
 
+    public void RestartGame()
+    {
+        StartCoroutine(StartTheGame());
+    }
+
     IEnumerator StartTheGame()
     {
+        isPaused = true;
+        timerTxt.gameObject.SetActive(false);
         timerTxt.gameObject.SetActive(true);
         timerTxt.text = "3";
         yield return new WaitForSeconds(1f);
+        timerTxt.gameObject.SetActive(false);
+        timerTxt.gameObject.SetActive(true);
         timerTxt.text = "2";
         yield return new WaitForSeconds(1f);
+        timerTxt.gameObject.SetActive(false);
+        timerTxt.gameObject.SetActive(true);
         timerTxt.text = "1";
         yield return new WaitForSeconds(1f);
+        timerTxt.gameObject.SetActive(false);
+        timerTxt.gameObject.SetActive(true);
         timerTxt.text = "Go!";
         isPaused = false;
         yield return new WaitForSeconds(1f);
         timerTxt.text = "";
         timerTxt.gameObject.SetActive(false);
+    }
+
+    public void UpdateTimerText(string txt)
+    {
+        timerTxt.gameObject.SetActive(false);
+        timerTxt.gameObject.SetActive(true);
+        timerTxt.text = txt;
     }
 }

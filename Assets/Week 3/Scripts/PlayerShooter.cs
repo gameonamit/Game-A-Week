@@ -9,9 +9,15 @@ public class PlayerShooter : MonoBehaviourPunCallbacks
     public PlayerInput playerInput;
     public Transform firePoint;
     public GameObject bulletPrefab;
+    [SerializeField] private ParticleSystem MuzzleFlash;
 
     public float bulletForce = 20f;
+    public float fireRate = 10f;
+    private float nextTimeToFire = 0f;
     Vector2 mousePos;
+
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip bulletSFX;
 
     void Update()
     {
@@ -21,8 +27,9 @@ public class PlayerShooter : MonoBehaviourPunCallbacks
             ApplyRotation();
             //RotateTowards();
 
-            if (Input.GetButtonDown("Fire1"))
+            if (Input.GetButtonDown("Fire1") && Time.time >= nextTimeToFire)
             {
+                nextTimeToFire = Time.time + 1f / fireRate;
                 Shoot();
             }
         }
@@ -45,7 +52,6 @@ public class PlayerShooter : MonoBehaviourPunCallbacks
     [PunRPC]
     private void ShootBullet(Vector3 firePos, Quaternion fireRotation, Vector3 fireDirection)
     {
-        //GameObject bullet = PhotonNetwork.Instantiate(bulletPrefab.name, firePoint.position, firePoint.rotation);
         GameObject bullet = Instantiate(bulletPrefab, firePos, fireRotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.AddForce(fireDirection * bulletForce, ForceMode2D.Impulse);
@@ -58,6 +64,16 @@ public class PlayerShooter : MonoBehaviourPunCallbacks
         {
 
         }
+
+        audioSource.PlayOneShot(bulletSFX);
+        StartCoroutine(MuzzleFlashEffect());
+    }
+
+    private IEnumerator MuzzleFlashEffect()
+    {
+        MuzzleFlash.Play();
+        yield return new WaitForSeconds(0.15f);
+        MuzzleFlash.Stop();
     }
 
     private void ApplyRotation()

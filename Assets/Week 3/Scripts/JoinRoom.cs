@@ -10,6 +10,7 @@ public class JoinRoom : MonoBehaviourPunCallbacks
 
     public void JoinNewRoom()
     {
+        if(joinInput.text != string.Empty)
         PhotonNetwork.JoinRoom(joinInput.text);
     }
 }

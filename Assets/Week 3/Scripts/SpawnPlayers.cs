@@ -18,10 +18,8 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks
 
     private IEnumerator SpawnPlayer()
     {
-        FindObjectOfType<LevelManager>().IncreasePlayerSpawned();
         yield return new WaitForSeconds(0.1f);
         GameObject []players = GameObject.FindGameObjectsWithTag("OtherPlayer");
-        Debug.Log(players.Length);
         if(players.Length <= 0)
         {
             Vector3 SpawnPosition = SpawnPoints[0].transform.position;
@@ -47,6 +45,5 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         PlayerFollowTarget followTarget = player.GetComponentInChildren<PlayerFollowTarget>();
         cineCam.Follow = followTarget.transform;
-        Debug.Log("HEre!");
     }
 }

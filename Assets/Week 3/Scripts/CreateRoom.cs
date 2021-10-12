@@ -11,12 +11,12 @@ public class CreateRoom : MonoBehaviourPunCallbacks
 
     public void CreateNewRoom()
     {
-        PhotonNetwork.CreateRoom(createInput.text);
+        if (createInput.text != string.Empty)
+            PhotonNetwork.CreateRoom(createInput.text);
     }
 
     public override void OnJoinedRoom()
     {
-        //SceneManager.LoadScene("Naming");
         PhotonNetwork.LoadLevel("GameScene");
     }
 }

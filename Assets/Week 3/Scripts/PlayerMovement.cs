@@ -24,6 +24,9 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
 
     private bool changingDirection => (rb.velocity.x > 0f && playerInput.Horizontal < 0f) || (rb.velocity.x < 0f && playerInput.Horizontal > 0f);
 
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip jumpSFX;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -127,6 +130,9 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
     private void Jump()
     {
         if (isGrounded)
+        {
             rb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+            audioSource.PlayOneShot(jumpSFX);
+        }
     }
 }
