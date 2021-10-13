@@ -422,8 +422,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Joe
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d053acd9116a6ee43910d6fc53957636, type: 2}
+  m_sharedMaterial: {fileID: 4232585302124041698, guid: d053acd9116a6ee43910d6fc53957636, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -590,7 +590,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.754717, g: 0.12459949, b: 0.12459949, a: 1}
+  m_Color: {r: 0.11764706, g: 0.7647059, b: 0.45490196, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -15560,7 +15560,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 20
   m_Sprite: {fileID: 21300000, guid: d784d833960b8754f88157c2a36cc66a, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.97404873, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -15611,8 +15611,8 @@ GameObject:
   - component: {fileID: 5276084766168320058}
   - component: {fileID: 5276084766168320060}
   - component: {fileID: 5276084766168320057}
-  - component: {fileID: 5276084766168320056}
   - component: {fileID: 5276084766168320061}
+  - component: {fileID: 8982332574860375640}
   - component: {fileID: 6937029327921535034}
   - component: {fileID: 5927870528584417691}
   - component: {fileID: 1446698726}
@@ -15692,7 +15692,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &5276084766168320056
+--- !u!58 &5276084766168320061
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5276084766168320059}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 1.55}
+  serializedVersion: 2
+  m_Radius: 1.53
+--- !u!61 &8982332574860375640
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15718,22 +15734,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.3, y: 5.02}
   m_EdgeRadius: 0
---- !u!58 &5276084766168320061
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5276084766168320059}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.55}
-  serializedVersion: 2
-  m_Radius: 1.53
 --- !u!114 &6937029327921535034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15755,8 +15755,8 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 5927870528584417691}
   - {fileID: 1446698726}
-  - {fileID: 1246029283}
   - {fileID: 5785090504877521695}
+  - {fileID: 1246029283}
   - {fileID: 1483888629}
   sceneViewId: 0
   InstantiationId: 0
@@ -15798,6 +15798,9 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 1
     Name: isGrounded
+  - Type: 4
+    SynchronizeType: 1
+    Name: BulletStop
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
@@ -15827,8 +15830,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerName: 
+  PlayerColorHex: 
   smoothing: 20
   playerNameTxt: {fileID: 1261310222}
+  spriteRen: {fileID: 4201852729097008180}
 --- !u!114 &5276084766168320062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15871,6 +15876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Horizontal: 0
   jump: 0
+  bulletStopInput: 0
 --- !u!114 &5276084766274763177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15886,6 +15892,7 @@ MonoBehaviour:
   playerInput: {fileID: 5276084766168320063}
   playerMovement: {fileID: 5276084766168320062}
   runSpeed: 60
+  bulletStop: 0
 --- !u!114 &5751520034953414347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15953,7 +15960,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7528156380209905324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.34, y: 5.29, z: 0}
+  m_LocalPosition: {x: 2.94, y: 4.87, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3869717629551783277}

@@ -135,4 +135,16 @@ public class PlayerMovement : MonoBehaviourPunCallbacks
             audioSource.PlayOneShot(jumpSFX);
         }
     }
+
+    public void BulletStoped()
+    {
+        GetComponent<BoxCollider2D>().enabled = false;
+        FindObjectOfType<PostProcessingUpdater>().UpdateToBulletStopPost();
+    }
+
+    public void BulletStopClosed()
+    {
+        GetComponent<BoxCollider2D>().enabled = true;
+        FindObjectOfType<PostProcessingUpdater>().UpdateToDefaultPost();
+    }
 }

@@ -25,7 +25,9 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks
             Vector3 SpawnPosition = SpawnPoints[0].transform.position;
             var player = PhotonNetwork.Instantiate(playerPrefab.name, SpawnPosition, Quaternion.identity);
             string playerName = PlayerInformation.instance.PlayerName;
+            string playerColorHex = PlayerInformation.instance.PlayerSkinColorHex;
             player.GetComponent<NetworkPlayer>().PlayerName = playerName;
+            player.GetComponent<NetworkPlayer>().PlayerColorHex = playerColorHex;
             cineCam.transform.position = SpawnPoints[0].transform.position;
         }
         else
@@ -33,7 +35,9 @@ public class SpawnPlayers : MonoBehaviourPunCallbacks
             Vector3 SpawnPosition = SpawnPoints[1].transform.position;
             var player = PhotonNetwork.Instantiate(playerPrefab.name, SpawnPosition, Quaternion.identity);
             string playerName = PlayerInformation.instance.PlayerName;
+            string playerColorHex = PlayerInformation.instance.PlayerSkinColorHex;
             player.GetComponent<NetworkPlayer>().PlayerName = playerName;
+            player.GetComponent<NetworkPlayer>().PlayerColorHex = playerColorHex;
             cineCam.transform.position = SpawnPoints[1].transform.position;
         }
         yield return new WaitForSeconds(0.01f);

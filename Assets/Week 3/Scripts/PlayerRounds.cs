@@ -15,8 +15,6 @@ public class PlayerRounds : MonoBehaviourPun, IPunObservable
 
     public void IncreaseRound()
     {
-        if (!LevelManager.isPaused)
-        {
             roundsWon += 1;
             photonView.RPC("UpdateRounds", RpcTarget.All, roundsWon);
 
@@ -27,10 +25,8 @@ public class PlayerRounds : MonoBehaviourPun, IPunObservable
             }
             else
             {
-                transform.position = defaultPosition;
-                //   StartCoroutine(RestartRound());
+                photonView.RPC("ResetPlayerPosition", RpcTarget.All);
             }
-        }
     }
 
     public void DecreaseRound()
@@ -49,6 +45,16 @@ public class PlayerRounds : MonoBehaviourPun, IPunObservable
         {
             string playerName = GetComponent<NetworkPlayer>().PlayerName;
             FindObjectOfType<LevelManager>().GameOver(playerName);
+        }
+    }
+
+    [PunRPC]
+    public void ResetPlayerPosition()
+    {
+        PlayerRounds []playerRounds = FindObjectsOfType<PlayerRounds>();
+        foreach (PlayerRounds plaRounds in playerRounds)
+        {
+            plaRounds.gameObject.transform.position = plaRounds.defaultPosition;
         }
     }
 

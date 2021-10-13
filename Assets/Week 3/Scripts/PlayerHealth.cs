@@ -44,7 +44,8 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
             CurrentHealth -= value;
             if (CurrentHealth <= 0)
             {
-                CurrentHealth = 0;
+                photonView.RPC("PauseTheGame", RpcTarget.All);
+                photonView.RPC("ResetHealth", RpcTarget.All, 100);
                 if (this.gameObject.CompareTag("Player"))
                 {
                     GameObject player = GameObject.FindGameObjectWithTag("OtherPlayer");
@@ -55,9 +56,25 @@ public class PlayerHealth : MonoBehaviourPunCallbacks
                     GameObject player = GameObject.FindGameObjectWithTag("Player");
                     player.GetComponent<PlayerRounds>().IncreaseRound();
                 }
-                CurrentHealth = 100;
             }
             UpdateUI();
+        }
+    }
+
+    [PunRPC]
+    public void PauseTheGame()
+    {
+        FindObjectOfType<LevelManager>().PauseGame();
+    }
+
+    [PunRPC]
+    public void ResetHealth(int health)
+    {
+        PlayerHealth []playerHealth = FindObjectsOfType<PlayerHealth>();
+        foreach (PlayerHealth palHealth in playerHealth)
+        {
+            palHealth.CurrentHealth = health;
+            palHealth.UpdateUI();
         }
     }
 

@@ -25,6 +25,6 @@ public class NamingController : MonoBehaviourPunCallbacks
     IEnumerator LoadGameScene()
     {
         yield return new WaitForSeconds(0.02f);
-        PhotonNetwork.LoadLevel("Lobby");
+        SceneManager.LoadScene("Selection");
     }
 }

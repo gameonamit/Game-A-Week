@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviourPunCallbacks
 {
     public float Horizontal;
     public bool jump = false;
+    public bool bulletStopInput = false;
 
     private void Update()
     {
@@ -14,6 +15,7 @@ public class PlayerInput : MonoBehaviourPunCallbacks
         {
             Horizontal = Input.GetAxisRaw("Horizontal");
             jump = Input.GetButtonDown("Jump");
+            bulletStopInput = Input.GetButton("BulletStop");
         }
     }
 }

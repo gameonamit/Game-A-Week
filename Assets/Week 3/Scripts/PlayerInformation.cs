@@ -6,6 +6,7 @@ public class PlayerInformation : MonoBehaviour
 {
     public static PlayerInformation instance;
     public string PlayerName;
+    public string PlayerSkinColorHex;
 
     private void Awake()
     {

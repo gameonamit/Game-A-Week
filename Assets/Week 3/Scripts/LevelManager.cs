@@ -11,12 +11,15 @@ public class LevelManager : MonoBehaviourPunCallbacks
     public static bool isPaused = true;
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private TextMeshProUGUI timerTxt;
+    private Animator timerAnim;
     [SerializeField] private TextMeshProUGUI resultsTxt;
     private int playersSpawned = 0;
 
     private void Awake()
     {
+        timerAnim = timerTxt.GetComponent<Animator>();
         timerTxt.gameObject.SetActive(true);
+        timerAnim.SetTrigger("Zoom");
         timerTxt.text = "Waiting for other player.";
     }
 
@@ -65,31 +68,25 @@ public class LevelManager : MonoBehaviourPunCallbacks
     IEnumerator StartTheGame()
     {
         isPaused = true;
-        timerTxt.gameObject.SetActive(false);
-        timerTxt.gameObject.SetActive(true);
+        timerAnim.SetTrigger("Zoom");
         timerTxt.text = "3";
         yield return new WaitForSeconds(1f);
-        timerTxt.gameObject.SetActive(false);
-        timerTxt.gameObject.SetActive(true);
+        timerAnim.SetTrigger("Zoom");
         timerTxt.text = "2";
         yield return new WaitForSeconds(1f);
-        timerTxt.gameObject.SetActive(false);
-        timerTxt.gameObject.SetActive(true);
+        timerAnim.SetTrigger("Zoom");
         timerTxt.text = "1";
         yield return new WaitForSeconds(1f);
-        timerTxt.gameObject.SetActive(false);
-        timerTxt.gameObject.SetActive(true);
+        timerAnim.SetTrigger("Zoom");
         timerTxt.text = "Go!";
         isPaused = false;
         yield return new WaitForSeconds(1f);
         timerTxt.text = "";
-        timerTxt.gameObject.SetActive(false);
     }
 
     public void UpdateTimerText(string txt)
     {
-        timerTxt.gameObject.SetActive(false);
-        timerTxt.gameObject.SetActive(true);
+        timerAnim.SetTrigger("Zoom");
         timerTxt.text = txt;
     }
 }

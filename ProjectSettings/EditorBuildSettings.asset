@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Week 3/Naming.unity
     guid: 9b3c8d33cee41784f8beda05a2d8e29a
   - enabled: 1
+    path: Assets/Week 3/Selection.unity
+    guid: ff1886a0d11243749ad5097cfdf1bf3c
+  - enabled: 1
     path: Assets/Week 3/Lobby.unity
     guid: 1fc0576f443df704881a23436c129bd7
   - enabled: 1
