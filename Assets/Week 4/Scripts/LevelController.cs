@@ -12,6 +12,10 @@ public class LevelController : MonoBehaviour
     [SerializeField] GameObject[] LivesUIImage;
     [SerializeField] string NextSceneName;
     [SerializeField] TextMeshProUGUI indicatorTxt;
+    [SerializeField] ParticleSystem confettiParticle;
+    [SerializeField] AudioClip winSound;
+
+    private AudioSource audioSource;
 
     bool isGamePaused = false;
 
@@ -19,6 +23,7 @@ public class LevelController : MonoBehaviour
     {
         UpdateLivesUI();
         gameManager = FindObjectOfType<FGameManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void UpdateLivesUI()
@@ -78,7 +83,9 @@ public class LevelController : MonoBehaviour
     {
         indicatorTxt.gameObject.SetActive(true);
         indicatorTxt.text = "Sucesss!";
-        yield return new WaitForSeconds(3f);
+        confettiParticle.Play();
+        audioSource.PlayOneShot(winSound);
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(NextSceneName);
     }
 

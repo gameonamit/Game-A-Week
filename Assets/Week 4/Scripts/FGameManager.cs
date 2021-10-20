@@ -80,6 +80,7 @@ public class FGameManager : MonoBehaviour
 
         //Trajectory
         trajectory.UpdateDots(ball.pos, force);
+        
     }
 
     void OnDragEnd()

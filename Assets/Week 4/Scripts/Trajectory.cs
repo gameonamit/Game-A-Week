@@ -11,10 +11,13 @@ public class Trajectory : MonoBehaviour
     [SerializeField] [Range(0.01f, 0.3f)] float dotMinScale;
     [SerializeField] [Range(0.05f, 0.20f)] float dotMaxScale;
 
+    [SerializeField] LayerMask groundLayer;
+
     Transform[] dotsList;
     int collidedDot;
 
     Vector2 pos;
+    Vector2 newPos;
 
     float timeStamp;
 
@@ -55,7 +58,6 @@ public class Trajectory : MonoBehaviour
             pos.y = (ballPos.y + forceApplied.y * timeStamp) -
                 (Physics2D.gravity.magnitude * timeStamp * timeStamp) / 2f;
 
-
             dotsList[i].position = pos;
 
             timeStamp += dotSpacing;
@@ -65,30 +67,27 @@ public class Trajectory : MonoBehaviour
     //public void UpdateDots(Vector2 ballPos, Vector2 forceApplied)
     //{
     //    timeStamp = dotSpacing;
+    //    Debug.Log(forceApplied);
     //    for (int i = 0; i < dotsNumber; i++)
     //    {
     //        pos.x = (ballPos.x + forceApplied.x * timeStamp);
     //        pos.y = (ballPos.y + forceApplied.y * timeStamp) -
     //            (Physics2D.gravity.magnitude * timeStamp * timeStamp) / 2f;
 
-    //        TrajectoryDot trajectoryDot = dotsList[i].GetComponent<TrajectoryDot>();
-    //        if (trajectoryDot.isColliding)
-    //        {
-    //            //if(i < collidedDot)
-    //            collidedDot = i;
-    //        }
+    //        bool isColliding = Physics2D.OverlapCircle(pos, 0.3f, groundLayer);
 
-    //        if(i >= collidedDot)
+    //        if (!isColliding)
     //        {
-    //            float distance = Vector2.Distance(dotsList[i - 1].transform.position, pos); ;
-    //            Vector2 newPos = new Vector2(pos.x + distance, pos.y);
-    //            dotsList[i].position = newPos;
+    //            dotsList[i].GetComponent<SpriteRenderer>().enabled = true;
+    //            dotsList[i].position = pos;
     //        }
     //        else
     //        {
-    //            dotsList[i].position = pos;
+    //            dotsList[i].GetComponent<SpriteRenderer>().enabled = false;
+    //            //pos.x = (ballPos.x + forceApplied.x * -timeStamp);
+    //            //pos.y = (ballPos.y + forceApplied.y * timeStamp) -
+    //            //    (Physics2D.gravity.magnitude * timeStamp * timeStamp) / 2f;
     //        }
-
     //        timeStamp += dotSpacing;
     //    }
     //}

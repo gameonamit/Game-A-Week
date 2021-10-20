@@ -7,11 +7,13 @@ public class SceneLoader : MonoBehaviour
 {
     public void OnStartBtnClick()
     {
+        FBackGroundMusic.instance.PlayButtonSound();
         SceneManager.LoadScene("Level1");
     }
 
     public void OnQuitBtnClick()
     {
+        FBackGroundMusic.instance.PlayButtonSound();
         Application.Quit();
     }
 }

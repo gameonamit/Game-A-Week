@@ -21,11 +21,15 @@ public class Ball : MonoBehaviour
     [SerializeField] float groundCheckRadius = 0.4f;
     [SerializeField] LayerMask groundLayer;
 
+    [SerializeField] AudioClip ballBounceSFX;
+    AudioSource audioSource;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<CircleCollider2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
+        audioSource = GetComponentInChildren<AudioSource>();
         levelController = FindObjectOfType<LevelController>();
     }
 
@@ -51,7 +55,7 @@ public class Ball : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(transform.position, groundCheckRadius, groundLayer);
         if (isForced)
         {
-            if (isGrounded){rb.drag = 1.5f;}
+            if (isGrounded){rb.angularDrag = 1.5f;}
             else { rb.drag = 0f; }
         }
     }
@@ -94,5 +98,10 @@ public class Ball : MonoBehaviour
         {
             isInFinishPoint = false;
         }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        audioSource.PlayOneShot(ballBounceSFX);
     }
 }
