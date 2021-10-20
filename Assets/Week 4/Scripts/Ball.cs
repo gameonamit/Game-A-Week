@@ -17,6 +17,10 @@ public class Ball : MonoBehaviour
     bool fading = false;
     [SerializeField] float fadingSpeed = 2f;
 
+    bool isGrounded = false;
+    [SerializeField] float groundCheckRadius = 0.4f;
+    [SerializeField] LayerMask groundLayer;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -27,21 +31,28 @@ public class Ball : MonoBehaviour
 
     private void Update()
     {
-        if (rb.velocity.magnitude <= 0.2f && isForced)
+        if (rb.velocity.magnitude <= 0.2f && isForced && !isInFinishPoint)
         {
             fading = true;
         }
 
-        if (fading && !isInFinishPoint)
+        if (fading)
         {
             Color col = sr.color;
             col.a -= Time.deltaTime * fadingSpeed;
             sr.color = col;
 
-            if(col.a <= 0)
+            if (col.a <= 0)
             {
                 StartCoroutine(DestoryDelay());
             }
+        }
+
+        isGrounded = Physics2D.OverlapCircle(transform.position, groundCheckRadius, groundLayer);
+        if (isForced)
+        {
+            if (isGrounded){rb.drag = 1.5f;}
+            else { rb.drag = 0f; }
         }
     }
 

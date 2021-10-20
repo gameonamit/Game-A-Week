@@ -60,6 +60,7 @@ public class FGameManager : MonoBehaviour
     void OnDragStart()
     {
         if (ball == null) return;
+        if(ball.isForced) return;
         ball.DeactivateRB();
         startPoint = cam.ScreenToWorldPoint(Input.mousePosition);
 
@@ -69,6 +70,7 @@ public class FGameManager : MonoBehaviour
     void OnDrag()
     {
         if (ball == null) return;
+        if (ball.isForced) return;
         endPoint = cam.ScreenToWorldPoint(Input.mousePosition);
         distance = Vector2.Distance(startPoint, endPoint);
         direction = (startPoint - endPoint).normalized;
@@ -83,6 +85,7 @@ public class FGameManager : MonoBehaviour
     void OnDragEnd()
     {
         if (ball == null) return;
+        if (ball.isForced) return;
         ball.ActivateRB();
         ball.Push(force);
 

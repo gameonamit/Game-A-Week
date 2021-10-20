@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LevelController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class LevelController : MonoBehaviour
     [SerializeField] int noOfLives = 4;
     [SerializeField] GameObject[] LivesUIImage;
     [SerializeField] string NextSceneName;
+    [SerializeField] TextMeshProUGUI indicatorTxt;
 
     bool isGamePaused = false;
 
@@ -50,6 +52,7 @@ public class LevelController : MonoBehaviour
 
                     //GameOver
                     Debug.Log("GameOver");
+                    StartCoroutine(GameOver());
                 }
             }
             else
@@ -66,13 +69,24 @@ public class LevelController : MonoBehaviour
 
                 //Game Won
                 Debug.Log("Game Won");
-                GameWon();
+                StartCoroutine(GameWon());
             }
         }
     }
 
-    private void GameWon()
+    private IEnumerator GameWon()
     {
+        indicatorTxt.gameObject.SetActive(true);
+        indicatorTxt.text = "Sucesss!";
+        yield return new WaitForSeconds(3f);
         SceneManager.LoadScene(NextSceneName);
+    }
+
+    private IEnumerator GameOver()
+    {
+        indicatorTxt.gameObject.SetActive(true);
+        indicatorTxt.text = "Failed!";
+        yield return new WaitForSeconds(3f);
+        SceneManager.LoadScene(0);
     }
 }
