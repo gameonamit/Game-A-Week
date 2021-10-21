@@ -605,8 +605,8 @@ Transform:
   m_Father: {fileID: 836005129}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!68 &253963034
-EdgeCollider2D:
+--- !u!60 &253963034
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -619,21 +619,26 @@ EdgeCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0.02
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 0.16, y: 0.16}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   m_Points:
-  - {x: -2, y: -2}
-  - {x: -2, y: 2}
-  - {x: 0.47, y: 2}
-  - {x: 0.47, y: 1.74}
-  - {x: 0.59, y: 1.74}
-  - {x: 0.59, y: 2}
-  - {x: 1.9913186, y: 2}
-  - {x: 1.9913191, y: -2}
-  - {x: -2, y: -2}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
+    m_Paths:
+    - - {x: -2, y: -2}
+      - {x: -2, y: 2}
+      - {x: 0.47, y: 2}
+      - {x: 0.47, y: 1.74}
+      - {x: 0.59, y: 1.74}
+      - {x: 0.59, y: 2}
+      - {x: 1.9913186, y: 2}
+      - {x: 1.9913191, y: -2}
+      - {x: -2, y: -2}
 --- !u!212 &253963035
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7704,7 +7709,7 @@ MonoBehaviour:
   dotMaxScale: 0.06
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!1 &1885105172
 GameObject:
   m_ObjectHideFlags: 0

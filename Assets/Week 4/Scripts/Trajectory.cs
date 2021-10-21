@@ -49,48 +49,58 @@ public class Trajectory : MonoBehaviour
         }
     }
 
-    public void UpdateDots(Vector2 ballPos, Vector2 forceApplied)
-    {
-        timeStamp = dotSpacing;
-        for (int i = 0; i < dotsNumber; i++)
-        {
-            pos.x = (ballPos.x + forceApplied.x * timeStamp);
-            pos.y = (ballPos.y + forceApplied.y * timeStamp) -
-                (Physics2D.gravity.magnitude * timeStamp * timeStamp) / 2f;
-
-            dotsList[i].position = pos;
-
-            timeStamp += dotSpacing;
-        }
-    }
-
     //public void UpdateDots(Vector2 ballPos, Vector2 forceApplied)
     //{
     //    timeStamp = dotSpacing;
-    //    Debug.Log(forceApplied);
     //    for (int i = 0; i < dotsNumber; i++)
     //    {
     //        pos.x = (ballPos.x + forceApplied.x * timeStamp);
     //        pos.y = (ballPos.y + forceApplied.y * timeStamp) -
     //            (Physics2D.gravity.magnitude * timeStamp * timeStamp) / 2f;
 
-    //        bool isColliding = Physics2D.OverlapCircle(pos, 0.3f, groundLayer);
+    //        dotsList[i].position = pos;
 
-    //        if (!isColliding)
-    //        {
-    //            dotsList[i].GetComponent<SpriteRenderer>().enabled = true;
-    //            dotsList[i].position = pos;
-    //        }
-    //        else
-    //        {
-    //            dotsList[i].GetComponent<SpriteRenderer>().enabled = false;
-    //            //pos.x = (ballPos.x + forceApplied.x * -timeStamp);
-    //            //pos.y = (ballPos.y + forceApplied.y * timeStamp) -
-    //            //    (Physics2D.gravity.magnitude * timeStamp * timeStamp) / 2f;
-    //        }
     //        timeStamp += dotSpacing;
     //    }
     //}
+
+    public void UpdateDots(Vector2 ballPos, Vector2 forceApplied)
+    {
+        timeStamp = dotSpacing;
+        //Debug.Log(forceApplied);
+        for (int i = 0; i < dotsNumber; i++)
+        {
+            pos.x = (ballPos.x + forceApplied.x * timeStamp);
+            pos.y = (ballPos.y + forceApplied.y * timeStamp) -
+                (Physics2D.gravity.magnitude * timeStamp * timeStamp) / 2f;
+
+            bool isColliding = Physics2D.OverlapCircle(pos, 0.1f, groundLayer);
+
+            if (!isColliding)
+            {
+                if (collidedDot < i) 
+                {
+                    dotsList[i].GetComponent<SpriteRenderer>().enabled = false;
+                }
+                else
+                {
+                    dotsList[i].GetComponent<SpriteRenderer>().enabled = true;
+                }
+                dotsList[i].position = pos;
+            }
+            else
+            {
+                collidedDot = i;
+                newPos.x = (ballPos.x + forceApplied.x * timeStamp);
+                newPos.y = (ballPos.y + forceApplied.y * timeStamp) -
+                    (Physics2D.gravity.magnitude * timeStamp * timeStamp) / 2f;
+
+                dotsList[i].GetComponent<SpriteRenderer>().enabled = false;
+                dotsList[i].position = newPos;
+            }
+            timeStamp += dotSpacing;
+        }
+    }
 
     public void Show()
     {

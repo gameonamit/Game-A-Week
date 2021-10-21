@@ -56,7 +56,7 @@ public class LevelController : MonoBehaviour
                     gameManager.DisableBall();
 
                     //GameOver
-                    Debug.Log("GameOver");
+                    //Debug.Log("GameOver");
                     StartCoroutine(GameOver());
                 }
             }
@@ -73,7 +73,7 @@ public class LevelController : MonoBehaviour
                 gameManager.DisableBall();
 
                 //Game Won
-                Debug.Log("Game Won");
+                //Debug.Log("Game Won");
                 StartCoroutine(GameWon());
             }
         }
