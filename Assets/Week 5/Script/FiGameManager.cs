@@ -40,7 +40,13 @@ public class FiGameManager : MonoBehaviour
     {
         instance = this;
         audioSource = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
         audioSource.volume = 0f;
+        audioSource.enabled = false;
+        Time.timeScale = 1f;
     }
 
     private void Update()
@@ -50,6 +56,7 @@ public class FiGameManager : MonoBehaviour
             if(isStarted == false)
             {
                 isStarted = true;
+                audioSource.enabled = true;
                 audioSource.clip = musicClip;
                 audioSource.time = startOffset;
                 audioSource.Play();
@@ -83,6 +90,12 @@ public class FiGameManager : MonoBehaviour
     #region GAME OVER
     public void GameOver()
     {
+        StartCoroutine(Co_GameOver());
+    }
+
+    IEnumerator Co_GameOver()
+    {
+        yield return new WaitForSeconds(0.5f);
         isGameOver = true;
         GameOverMenu.SetActive(true);
         GUI.SetActive(false);
@@ -101,6 +114,12 @@ public class FiGameManager : MonoBehaviour
     #region GAME WON
     public void GameWon()
     {
+        StartCoroutine(Co_GameWon());
+    }
+
+    IEnumerator Co_GameWon()
+    {
+        yield return new WaitForSeconds(2f);
         isGameOver = true;
         GameWonMenu.SetActive(true);
         GUI.SetActive(false);
@@ -119,6 +138,7 @@ public class FiGameManager : MonoBehaviour
     private void StopMusic()
     {
         audioSource.Stop();
+        audioSource.enabled = false;
         // Maybe play music stoped sound
     }
 

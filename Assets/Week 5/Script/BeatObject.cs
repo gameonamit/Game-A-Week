@@ -9,7 +9,7 @@ public class BeatObject : MonoBehaviour
     [SerializeField] int score = 20;
 
     Transform player;
-    bool activated = false;
+    bool activated = true;
 
     private void Awake()
     {
@@ -19,20 +19,19 @@ public class BeatObject : MonoBehaviour
     private void Start()
     {
         player = FiGameManager.instance.GetPlayer();
-        ren.enabled = false;
     }
 
     private void Update()
     {
         float zDistance = transform.position.z - player.transform.position.z;
-        if(zDistance < distanceToActivate)
-        {
-            if (activated == false)
-            {
-                activated = true;
-                ren.enabled = true;
-            }
-        }
+        //if(zDistance < distanceToActivate)
+        //{
+        //    if (activated == false)
+        //    {
+        //        activated = true;
+        //        ren.enabled = true;
+        //    }
+        //}
 
         if(activated == true)
         {

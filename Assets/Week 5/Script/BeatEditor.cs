@@ -5,7 +5,7 @@ using UnityEditor;
 
 [CustomEditor(typeof(BeatGenerator))]
 public class BeatEditor : Editor
-{    
+{
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -20,6 +20,32 @@ public class BeatEditor : Editor
         {
             BeatGenerator beatGenerator = (BeatGenerator)target;
             beatGenerator.ClearAllBeatObjects();
+        }
+
+        GUILayout.Space(20);
+        if (GUILayout.Button("Save All Beat"))
+        {
+            BeatGenerator beatGenerator = (BeatGenerator)target;
+            beatGenerator.SaveAllBeatObjects();
+        }
+
+        if (GUILayout.Button("Save All Bomb"))
+        {
+            BeatGenerator beatGenerator = (BeatGenerator)target;
+            beatGenerator.SaveAllBombObjects();
+        }
+        GUILayout.Space(20);
+
+        if (GUILayout.Button("Clear All Beat Lists"))
+        {
+            BeatGenerator beatGenerator = (BeatGenerator)target;
+            beatGenerator.ClearAllBeatLists();
+        }
+
+        if (GUILayout.Button("Clear All Bomb Lists"))
+        {
+            BeatGenerator beatGenerator = (BeatGenerator)target;
+            beatGenerator.ClearAllBombLists();
         }
     }
 }

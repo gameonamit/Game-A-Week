@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,11 @@ public class FPlayerController : MonoBehaviour
 
     [SerializeField] private float m_ForwardRotationSpeed = 10f;
 
+    [SerializeField] private float jumpForce = 20f;
+    [SerializeField] private float jumpDuration = 0.5f;
+
     private float Horizontal;
+    public bool isJumping = false;
 
     [SerializeField] private float playerLeftEdge = -4.00f;
     [SerializeField] private float playerRightEdge = 4.00f;
@@ -44,7 +49,14 @@ public class FPlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ApplyGravity();
+        if (isJumping == true)
+        {
+            ApplyJump();
+        }
+        else
+        {
+            ApplyGravity();
+        }
         if (FiGameManager.instance.isStarted == true && FiGameManager.instance.isGameOver == false)
         {
             ApplyStrafeMovement();
@@ -57,6 +69,11 @@ public class FPlayerController : MonoBehaviour
     private void GetInput()
     {
         Horizontal = Input.GetAxisRaw("Horizontal");
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            //Jump();
+        }
     }
 
     private void ApplyGravity()
@@ -65,6 +82,30 @@ public class FPlayerController : MonoBehaviour
         transform.position += angle * m_GravityScale * Time.deltaTime;
     }
 
+    #region Jump
+    private void Jump()
+    {
+        if(isJumping == false)
+        {
+            isJumping = true;
+            StartCoroutine(Co_Jump());
+        }
+    }
+
+    IEnumerator Co_Jump()
+    {
+        yield return new WaitForSeconds(jumpDuration);
+        isJumping = false;
+    }
+
+    private void ApplyJump()
+    {
+        Vector3 angle = new Vector3(0, 1, 0);
+        transform.position += angle * jumpForce * Time.deltaTime;
+    }
+    #endregion
+
+    #region Movement & Rotation
     private void ApplyStrafeMovement()
     {
         Vector3 angle = new Vector3(1, 0, 0);
@@ -91,6 +132,7 @@ public class FPlayerController : MonoBehaviour
         Vector3 angle = new Vector3(0, 0, -1);
         BallModel.transform.Rotate(angle * Horizontal * m_SideRotationSpeed * Time.deltaTime, Space.World);
     }
+    #endregion
 
     public float GetCurrentHorizontal()
     {
