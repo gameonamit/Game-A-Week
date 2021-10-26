@@ -5,21 +5,20 @@ using UnityEngine;
 public class BeatObject : MonoBehaviour
 {
     Renderer ren;
-    BeatGenerator beatGenerator;
     [SerializeField] float distanceToActivate;
+    [SerializeField] int score = 20;
 
     Transform player;
     bool activated = false;
 
     private void Awake()
     {
-        ren = GetComponentInChildren<Renderer>();
-        player = FindObjectOfType<FPlayerController>().transform;
-        beatGenerator = FindObjectOfType<BeatGenerator>();
+        ren = GetComponentInChildren<Renderer>();     
     }
 
     private void Start()
     {
+        player = FiGameManager.instance.GetPlayer();
         ren.enabled = false;
     }
 
@@ -39,7 +38,7 @@ public class BeatObject : MonoBehaviour
         {
             if(zDistance < -distanceToActivate)
             {
-                beatGenerator.AddActivatedBeatCount();
+                BeatGenerator.instance.AddActivatedBeatCount();
                 Destroy(this.gameObject);
             }
         }
@@ -50,7 +49,8 @@ public class BeatObject : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             FiGameManager.instance.PlaySongBeat();
-            beatGenerator.AddActivatedBeatCount();
+            BeatGenerator.instance.AddActivatedBeatCount();
+            FScoringSystem.instance.AddScore(score);
             ren.enabled = false;
             Destroy(this.gameObject, 0.6f);
         }

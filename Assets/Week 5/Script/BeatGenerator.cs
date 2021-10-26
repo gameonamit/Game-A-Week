@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class BeatGenerator : MonoBehaviour
 {
+    public static BeatGenerator instance;
+
     [SerializeField] GameObject beatPrefab;
+    [SerializeField] GameObject bombPrefab;
+
     [SerializeField] Transform beatContent;
+    [SerializeField] Transform bombContent;
+
     [SerializeField] int beatNumber;
     [SerializeField] int tempo;
 
@@ -16,15 +22,18 @@ public class BeatGenerator : MonoBehaviour
     public float activatedBeatCount = 0;
     public float beatCount;
 
-    private bool lastPosOne;
+    private bool lastPosOne = false;
     private float xPos;
 
-    [SerializeField] private ProgressSystem progressSys;
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
         beatCount = beatContent.childCount;
-        progressSys.UpdateProgressText();
+        ProgressSystem.instance.UpdateProgressText();
     }
 
     public void GenerateBeats()
@@ -35,7 +44,7 @@ public class BeatGenerator : MonoBehaviour
             if(lastPosOne == true)
             {
                 int ran = Random.Range(0 , 101);
-                if(ran < 15)
+                if(ran <= 40)
                 {
                     xPos = xPosOne;
                     lastPosOne = true;
@@ -49,21 +58,25 @@ public class BeatGenerator : MonoBehaviour
             else
             {
                 int ran = Random.Range(0, 101);
-                if (ran < 15)
+                if (ran <= 40)
                 {
                     xPos = xPosTwo;
                     lastPosOne = false;
                 }
                 else
                 {
-                    xPos = xPosTwo;
+                    xPos = xPosOne;
                     lastPosOne = true;
                 }
             }
 
-            Vector3 position = new Vector3(xPos, yPos, zPos);
-            GameObject beat = Instantiate(beatPrefab, position, Quaternion.identity);
+            Vector3 beatPosition = new Vector3(xPos, yPos, zPos);
+            Vector3 bombPosition = new Vector3(-xPos, yPos, zPos);
+            GameObject beat = Instantiate(beatPrefab, beatPosition, Quaternion.identity);
+            GameObject bomb = Instantiate(bombPrefab, bombPosition, Quaternion.identity);
+
             beat.transform.parent = beatContent;
+            bomb.transform.parent = bombContent;
 
             zPos += tempo;
         }
@@ -75,11 +88,22 @@ public class BeatGenerator : MonoBehaviour
         {
             DestroyImmediate(beatContent.transform.GetChild(i).gameObject);
         }
+
+        for (int i = 0; i < bombContent.transform.childCount; i++)
+        {
+            DestroyImmediate(bombContent.transform.GetChild(i).gameObject);
+        }
     }
 
     public void AddActivatedBeatCount()
     {
         activatedBeatCount += 1f;
-        progressSys.UpdateProgressText();
+        ProgressSystem.instance.UpdateProgressText();
+    }
+
+    public void DisableAllBeat()
+    {
+        beatContent.gameObject.SetActive(false);
+        bombContent.gameObject.SetActive(false);
     }
 }

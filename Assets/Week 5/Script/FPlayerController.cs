@@ -34,12 +34,18 @@ public class FPlayerController : MonoBehaviour
     private void Update()
     {
         GetInput();
+
+        if (transform.position.y < -10 && FiGameManager.instance.isGameOver == false)
+        {
+            //If ball falls off platform && game is not over -- GAME OVER
+            FiGameManager.instance.GameOver();
+        }
     }
 
     private void FixedUpdate()
     {
         ApplyGravity();
-        if (FiGameManager.instance.isStarted == true)
+        if (FiGameManager.instance.isStarted == true && FiGameManager.instance.isGameOver == false)
         {
             ApplyStrafeMovement();
             ApplyForwardMovement();

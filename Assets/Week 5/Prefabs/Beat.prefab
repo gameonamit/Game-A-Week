@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629c7bb290b0a57469c29fa1750af777, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanceToActivate: 60
-  activateSound: {fileID: 8300000, guid: 6ca3f24196fb06f469c267288831fb91, type: 3}
+  distanceToActivate: 65
+  score: 20
 --- !u!65 &4447438132180008080
 BoxCollider:
   m_ObjectHideFlags: 0
