@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class FiGameManager : MonoBehaviour
@@ -32,6 +33,10 @@ public class FiGameManager : MonoBehaviour
     [SerializeField] BeatGenerator beatGen;
     [SerializeField] FPlayerController player;
 
+    [SerializeField] GameObject startingText;
+    [SerializeField] ParticleSystem particleEffect;
+    [SerializeField] Animator camAnim;
+
     bool fadeIn = false;
     bool playingBeatOne = false;
     public bool isGameOver = false;
@@ -61,14 +66,22 @@ public class FiGameManager : MonoBehaviour
                 audioSource.time = startOffset;
                 audioSource.Play();
                 fadeIn = true;
+                startingText.SetActive(false);
+                particleEffect.Play();
             }
         }
 
-        if (fadeIn == true)
+        if (fadeIn == true && isGameOver == false)
         {
             if(audioSource.volume < volume)
             {
                 audioSource.volume += Time.deltaTime * 0.2f;
+
+                if(audioSource.volume > volume)
+                {
+                    audioSource.volume = volume;
+                    //Clamping audioSource to max voulem
+                }
             }
         }
     }
@@ -79,11 +92,13 @@ public class FiGameManager : MonoBehaviour
         {
             backAudioSource.PlayOneShot(beatOne);
             playingBeatOne = true;
+            camAnim.SetTrigger("Shake");
         }
         else
         {
             backAudioSource.PlayOneShot(beatTwo);
             playingBeatOne = false;
+            camAnim.SetTrigger("Shake");
         }
     }
 
@@ -98,10 +113,12 @@ public class FiGameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         isGameOver = true;
         GameOverMenu.SetActive(true);
+        GameOverMenu.GetComponentInChildren<Button>().Select();
         GUI.SetActive(false);
         UpdateGameOverMenuUI();
         beatGen.DisableAllBeat();
         StopMusic();
+        particleEffect.Stop();
     }
 
     private void UpdateGameOverMenuUI()
@@ -122,9 +139,12 @@ public class FiGameManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         isGameOver = true;
         GameWonMenu.SetActive(true);
+        GameWonMenu.GetComponentInChildren<Button>().Select();
         GUI.SetActive(false);
         UpdateGameWonMenuUI();
         beatGen.DisableAllBeat();
+        particleEffect.Stop();
+        yield return new WaitForSeconds(5f);
         StopMusic();
     }
 
@@ -137,9 +157,25 @@ public class FiGameManager : MonoBehaviour
 
     private void StopMusic()
     {
-        audioSource.Stop();
-        audioSource.enabled = false;
+        StartCoroutine(Co_StopMusic());
         // Maybe play music stoped sound
+    }
+
+    IEnumerator Co_StopMusic()
+    {
+        while (audioSource.isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+            float cVolume = audioSource.volume;
+            audioSource.volume = cVolume - Time.deltaTime * 0.5f;
+            if(audioSource.volume <= 0)
+            {
+                audioSource.Stop();
+                yield return new WaitForEndOfFrame();
+                audioSource.enabled = false;
+            }
+        }
+        
     }
 
     public Transform GetPlayer()

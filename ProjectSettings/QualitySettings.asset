@@ -148,7 +148,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: ae3edf48efd6d9145b491b9f0c1a0704, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Very High
@@ -234,5 +234,5 @@ QualitySettings:
     WebGL: 3
     Windows Store Apps: 5
     XboxOne: 5
-    iPhone: 2
+    iPhone: 3
     tvOS: 2

@@ -14,6 +14,10 @@ public class FPlayerController : MonoBehaviour
     [SerializeField] private float m_SideRotationSpeed = 15f;
 
     [SerializeField] private float m_ForwardSpeed = 20f;
+    [SerializeField] private float m_MaxForwardSpeed = 40f;
+    [SerializeField] private float m_ForwardSpeedMultiplier = 1.5f;
+
+    public float currentSpeed;
 
     [SerializeField] private float m_ForwardRotationSpeed = 10f;
 
@@ -34,6 +38,7 @@ public class FPlayerController : MonoBehaviour
     private void Start()
     {
         rb.velocity = Vector3.zero;
+        currentSpeed = m_ForwardSpeed;
     }
 
     private void Update()
@@ -117,8 +122,10 @@ public class FPlayerController : MonoBehaviour
 
     private void ApplyForwardMovement()
     {
+        currentSpeed += m_ForwardSpeedMultiplier;
+        if (currentSpeed >= m_MaxForwardSpeed) { currentSpeed = m_MaxForwardSpeed; }
         Vector3 angle = new Vector3(0, 0, 1);
-        transform.position += angle * m_ForwardSpeed * Time.deltaTime;
+        transform.position += angle * currentSpeed * Time.deltaTime;
     }
 
     private void ApplyForwardRotation()

@@ -15,7 +15,8 @@ public class CameraFollow : MonoBehaviour
 
     private void HandleTranslation()
     {
-        var targetPosition = target.TransformPoint(offSet);
+        //var targetPosition = target.TransformPoint(offSet);
+        var targetPosition = target.position + offSet;
         transform.position = Vector3.Lerp(transform.position, targetPosition, translateSpeed * Time.deltaTime);
     }
 }

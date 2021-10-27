@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: MyCustomSky
+  m_Shader: {fileID: -6465566751694194690, guid: 3d5b37f00b333a4459216e6919a36504, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_a4fdc6082769456bb81b8a65975e76c2: 0.02
+    - Vector1_c6ffecd5a9c642ea95547a09f6a7b90a: 5
+    - Vector1_cb7ffcb8191e43b0b442f6412611a9ff: 120
+    - Vector1_d99e28200de54d16a1301ded4e937853: 2.05
+    m_Colors:
+    - Color_10e47ee3598e4897880cf76178d7bb32: {r: 0.56995934, g: 0.24256852, b: 0.745283, a: 0}
+    - Color_8d311d361c214b3899c7c6601e0c0d4a: {r: 0, g: 0, b: 0, a: 0}
+    - Color_9cdf70ae424b496c9d58d3de7e807f18: {r: 1, g: 1, b: 1, a: 1}
+    - Vector2_e8667672d82d44faa19810b88fe679d4: {r: 8, g: -4, b: 0, a: 0}
+  m_BuildTextureStacks: []
